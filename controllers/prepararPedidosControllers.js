@@ -129,7 +129,7 @@ async function dataValidaCliente(osArray) {
 
     } catch (error) {
         logger.error(`Error en prepararPedidos: ${error.message}`);
-        return  res.status(500).json({ error: `Error en el servidor [preparar-pedidos-ms/dataValidaCliente] :  ${error.message}`  });
+        throw error; // Propaga el error a la función principal
     }
 
    
