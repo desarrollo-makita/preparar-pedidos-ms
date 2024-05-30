@@ -124,13 +124,15 @@ async function dataValidaCliente(osArray) {
         // MICROSERVICIO validar-orden-ms se debe cambiar cuando este listo
         await validarDatos(newArray);// revisamos si la data que tenemos para ingresar se encuentra ingresada en la BD telecontrol
 
+        logger.info(`Fin de la funcion dataValidaCliente`);
+        return newArray;
 
     } catch (error) {
-        logger.error(`Error dataValidaCliente: ${error.message}` );
+        logger.error(`Error en prepararPedidos: ${error.message}`);
+        return  res.status(500).json({ error: `Error en el servidor [preparar-pedidos-ms/dataValidaCliente] :  ${error.message}`  });
     }
 
-    logger.info(`Fin de la funcion dataValidaCliente`);
-    return newArray;
+   
 }
 
 /**
