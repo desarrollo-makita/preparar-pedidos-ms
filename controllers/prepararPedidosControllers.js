@@ -316,5 +316,5 @@ function formatDate(date) {
     }
 }
 module.exports = {
-    validarCliente, dataValidaCliente, prepararDataPedidos , validaDataPedidos
+    dataValidaCliente, prepararDataPedidos , validaDataPedidos
 };
