@@ -110,7 +110,7 @@ async function dataValidaCliente(osArray) {
 
             // recorremos las ordenes de servicio si el length es mayo a 0 es por que el clienteexiste en makita.
             if (resultadoConsulta.length > 0) {
-                logger.info(`El dato  ${codigoPosto} se encuentra en nuestra lista de servicio tecnico.`);
+                logger.info(`El dato  ${data.entidad} se encuentra en nuestra lista de servicio tecnico.`);
                 for (dataServicioTecnico of resultadoConsulta) {
                     os.direccion = dataServicioTecnico.Direccion;
                 }
