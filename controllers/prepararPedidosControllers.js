@@ -46,6 +46,7 @@ async function prepararDataPedidos(req, res) {
             let os_valor = objeto.itens[0].os;
             objeto.os = os_valor;
 
+            // LLAMMAOS AL MICROSERVICIO VALIDAR-PEDIDOS-MS
             let validaPedido = await validaDataPedidos(objeto);// revisa que el pedido no se haya ingresqado anteriormente
             logger.info(`Valida data pedido ${JSON.stringify(validaPedido)}`);
             if (validaPedido.length > 0) {
@@ -89,8 +90,21 @@ async function dataValidaCliente(osArray) {
 
         for (const os of osArray) {
             const codigoPosto = os.codigo_posto.trim();
-            // Obtener data de tabla entidad para validar cliente
-            let resultadoConsulta = await validarCliente(process.env.ENTIDAD_TABLE, codigoPosto);
+            
+            const data = {
+                tabla : process.env.ENTIDAD_TABLE,
+                entidad :  codigoPosto
+            }
+            
+            // Obtener data de tabla entidad para validar cliente------> cambiar por MICROSERVICIO valida-entidad-ms
+            // let resultadoConsulta = await validarCliente(process.env.ENTIDAD_TABLE, codigoPosto);
+
+            //microservicio validar-cliente-ms
+            logger.info(`Ejecuta microservcio validar-cliente-ms`); 
+            const resultadoConsulta = await axios.post('http://172.16.1.206:4006/ms/validar-cliente', data);
+            console.log("este es el resuñltado de la consulta" , resultadoConsulta);
+            
+            //logger.debug(`Respuesta microservcio validar-cliente-ms ${JSON.stringify(osList.data)}`); 
 
             // recorremos las ordenes de servicio si el length es mayo a 0 es por que el clienteexiste en makita.
             if (resultadoConsulta.length > 0) {
@@ -106,7 +120,8 @@ async function dataValidaCliente(osArray) {
             logger.log( 'La data a procesar no es un servicio tecnico de makita');
             return newData = { mensaje: 'La data a procesar no es un servicio tecnico de makita' };
         }
-
+        
+        // MICROSERVICIO validar-orden-ms se debe cambiar cuando este listo
         await validarDatos(newArray);// revisamos si la data que tenemos para ingresar se encuentra ingresada en la BD telecontrol
 
 
@@ -119,33 +134,6 @@ async function dataValidaCliente(osArray) {
 }
 
 /**
- * Consulta Tabla entidad BD BdqMakita
- * @param {*} tabla 
- * @param {*} entidad 
- * @returns 
- */
-async function validarCliente(tabla, entidad) {
-    logger.info(`Iniciamos la funcion validarCliente`);
-    let validacionCliente;
-    try {
-
-        // Conectarse a la base de datos 'DTEBdQMakita'
-        await connectToDatabase('DTEBdQMakita');
-        const consulta = `SELECT * FROM ${tabla} WHERE Entidad= '${entidad}' and tipoEntidad = 'cliente' and vigencia = 'S'`;
-        const result = await sql.query(consulta);
-
-        validacionCliente = result.recordset;
-
-        await closeDatabaseConnection();
-        logger.info(`Fin  la funcion validarCliente ${JSON.stringify(validacionCliente)}`);
-        return validacionCliente;
-    } catch (error) {
-        logger.error('Error al validar datos del cliente:', error.message);
-        
-    }
-}
-
-/**
  * Consultamos base de datos telecontrol(makita)
  * @param {*} objPedido 
  * @returns 
@@ -153,11 +141,12 @@ async function validarCliente(tabla, entidad) {
 async function validaDataPedidos(objPedido) {
 
     try {
+        console.log("objpedido",objPedido);
         await connectToDatabase('Telecontrol');
 
         const consulta = `SELECT * FROM Pedidos where ID_Pedido = '${objPedido.pedido}'`;
         const result = await sql.query(consulta);
-
+        console.log("resulllllllllllt" , result);
         await closeDatabaseConnection();
 
         return result.recordset;
@@ -176,6 +165,7 @@ async function validaDataPedidos(objPedido) {
 async function validarDatos(newArray) {
 
     try {
+        console.log("newArray _ " , newArray);
         logger.info(`Iniciamos la funcion validarDatos`);
         let osDataList = [];
         await connectToDatabase('Telecontrol');
