@@ -119,7 +119,7 @@ async function dataValidaCliente(osArray) {
             }
         }
         if (newArray.length === 0) {
-            logger.log( 'La data a procesar no es un servicio tecnico de makita');
+            logger.info( `La data a procesar no es un servicio tecnico de makita`);
             
         }
         
