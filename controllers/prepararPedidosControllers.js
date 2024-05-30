@@ -104,7 +104,7 @@ async function dataValidaCliente(osArray) {
             //microservicio validar-cliente-ms
             logger.info(`Ejecuta microservcio validar-cliente-ms`); 
             const resultadoConsulta = await axios.post('http://172.16.1.206:4006/ms/validar-cliente', data);
-            console.log("este es el resuñltado de la consulta" , resultadoConsulta);
+            console.log("este es el resuñltado de la consulta" , resultadoConsulta.data);
             
             //logger.debug(`Respuesta microservcio validar-cliente-ms ${JSON.stringify(osList.data)}`); 
 
