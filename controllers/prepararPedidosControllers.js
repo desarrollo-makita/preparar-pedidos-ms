@@ -110,7 +110,7 @@ async function dataValidaCliente(osArray) {
             //logger.debug(`Respuesta microservcio validar-cliente-ms ${JSON.stringify(osList.data)}`); 
 
             // recorremos las ordenes de servicio si el length es mayo a 0 es por que el clienteexiste en makita.
-            if (resultadoConsulta.length > 0) {
+            if (resultadoConsulta.data.length > 0) {
                 
                 for (dataServicioTecnico of resultadoConsulta) {
                     os.direccion = dataServicioTecnico.Direccion;
