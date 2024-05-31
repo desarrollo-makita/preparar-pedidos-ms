@@ -23,6 +23,7 @@ async function prepararDataPedidos(req, res) {
     let arrayPedidosRepetidos = [];
     try {
         let dataOrdenServicio = await dataValidaCliente(osList);// Dejamos solo las OS que tienen los servicio tecnicos de makita
+        console.log("dataOrdenServicio---------->", dataOrdenServicio);
         for (let i = 0; i < pedidosList.length; i++) {
             for (let j = 0; j < dataOrdenServicio.length; j++) {
                 if (pedidosList[i].pedido === dataOrdenServicio[j].idPedido) {
