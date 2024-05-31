@@ -49,8 +49,9 @@ async function prepararDataPedidos(req, res) {
             objeto.os = os_valor;
 
             // microservicio validar-pedido-ms
-            logger.info(`Ejecuta microservcio validar-pedido-ms ${objeto} ` ); 
-            const validaPedido = await axios.post('http://172.16.1.206:4008/ms/validar-pedido', objeto );
+           
+            logger.info(`Ejecuta microservcio validar-pedido-ms ${JSON.stringify(objeto)} ` ); 
+            const validaPedido = await axios.post('http://172.16.1.206:4008/ms/validar-pedidos', objeto );
             logger.debug(`Respuesta de microservicio validar-pedido-ms ${validaPedido}`);
             
             
