@@ -55,7 +55,7 @@ async function prepararDataPedidos(req, res) {
             logger.debug(`Respuesta de microservicio validar-pedido-ms ${validaPedido}`);
             
             
-            logger.info(`Valida data pedido ${JSON.stringify(validaPedido)}`);
+            logger.info(`Valida data pedido`);
             if (validaPedido.length > 0) {
                 
                 arrayPedidosRepetidos.push(objeto);
