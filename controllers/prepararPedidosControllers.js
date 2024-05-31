@@ -99,9 +99,6 @@ async function dataValidaCliente(osArray) {
                 entidad :  codigoPosto
             }
             
-            // Obtener data de tabla entidad para validar cliente------> cambiar por MICROSERVICIO valida-entidad-ms
-            // let resultadoConsulta = await validarCliente(process.env.ENTIDAD_TABLE, codigoPosto);
-
             //microservicio validar-cliente-ms
             logger.info(`Ejecuta microservcio validar-cliente-ms`); 
             const resultadoConsulta = await axios.post('http://172.16.1.206:4006/ms/validar-cliente', data);
@@ -113,6 +110,7 @@ async function dataValidaCliente(osArray) {
             if (resultadoConsulta.data.length > 0) {
                 
                 for (dataServicioTecnico of resultadoConsulta.data) {
+                    console.log("OOOOOOOOOOOOOOORDEn" , os);
                     os.direccion = dataServicioTecnico.Direccion;
                 }
                 newArray.push(os);
@@ -124,8 +122,10 @@ async function dataValidaCliente(osArray) {
             
         }
         
-        // MICROSERVICIO validar-orden-ms se debe cambiar cuando este listo
-        await validarDatos(newArray);// revisamos si la data que tenemos para ingresar se encuentra ingresada en la BD telecontrol
+       //microservicio validar-orden-ms
+       logger.info(`Ejecuta microservcio validar-orden-ms`); 
+       const resultadoValidarOrden = await axios.post('http://172.16.1.206:4007/ms/validar-orden', data);
+       console.log("este es el resuñltado de la consulta" , resultadoValidarOrden.data);
 
         logger.info(`Fin de la funcion dataValidaCliente`);
         return newArray;
