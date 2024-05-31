@@ -6,7 +6,7 @@ async function connectToDatabase(databaseName) {
         user: process.env.DB_USER,
         password: process.env.DB_PASS,
         server: process.env.DB_SERVER,
-        database: databaseName,
+        database: "Telecontrol",
         options: {
             encrypt: false
         }

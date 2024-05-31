@@ -149,7 +149,7 @@ async function validaDataPedidos(objPedido) {
         console.log("objpedido",objPedido);
         await connectToDatabase('Telecontrol');
 
-        const consulta = `SELECT * FROM Pedidos where ID_Pedido = '${objPedido.pedido}'`;
+        const consulta = `SELECT * FROM Telecontrol.dbo.Pedidos where ID_Pedido = '${objPedido.pedido}'`;
         const result = await sql.query(consulta);
         console.log("resulllllllllllt" , result);
         await closeDatabaseConnection();
