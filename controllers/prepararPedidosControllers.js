@@ -122,6 +122,7 @@ async function dataValidaCliente(osArray) {
             
         }
         
+        const data = newArray;
        //microservicio validar-orden-ms
        logger.info(`Ejecuta microservcio validar-orden-ms`); 
        const resultadoValidarOrden = await axios.post('http://172.16.1.206:4007/ms/validar-orden', data);
