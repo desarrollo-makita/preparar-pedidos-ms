@@ -52,7 +52,6 @@ async function prepararDataPedidos(req, res) {
            
             logger.info(`Ejecuta microservcio validar-pedido-ms` ); 
             const validaPedido = await axios.post('http://172.16.1.206:4008/ms/validar-pedidos', objeto );
-            console.log("validapedido data---->", validaPedido.data);
             logger.debug(`Respuesta de microservicio validar-pedido-ms ${validaPedido}`);
             
             
