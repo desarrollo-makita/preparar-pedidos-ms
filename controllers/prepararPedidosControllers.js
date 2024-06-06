@@ -57,7 +57,7 @@ async function prepararDataPedidos(req, res) {
             
             
             logger.info(`Valida data pedido`);
-            if (validaPedido.data) {
+            if (validaPedido.data.length > 0) {
                 
                 arrayPedidosRepetidos.push(objeto);
             } else {
