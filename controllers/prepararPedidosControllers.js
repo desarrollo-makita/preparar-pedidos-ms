@@ -3,6 +3,7 @@ const sql = require('mssql');
 const logger = require('../config/logger.js');
 const { connectToDatabase, closeDatabaseConnection } = require('../config/database.js');
 const moment = require('moment');
+require('dotenv').config();
 
 
 /**
@@ -51,7 +52,7 @@ async function prepararDataPedidos(req, res) {
             // microservicio validar-pedido-ms
            
             logger.info(`Ejecuta microservcio validar-pedido-ms` ); 
-            const validaPedido = await axios.post('http://172.16.1.206:4008/ms/validar-pedidos', objeto );
+            const validaPedido = await axios.post(`http://172.16.1.206:${process.env.PORT_VALIDAR_PEDIDOS}/ms/validar-pedidos`, objeto );
             logger.debug(`Respuesta de microservicio validar-pedido-ms ${validaPedido}`);
             
             
@@ -105,7 +106,7 @@ async function dataValidaCliente(osArray) {
             
             //microservicio validar-cliente-ms
             logger.info(`Ejecuta microservcio validar-cliente-ms`); 
-            const resultadoConsulta = await axios.post('http://172.16.1.206:4006/ms/validar-cliente', data);
+            const resultadoConsulta = await axios.post(`http://172.16.1.206:${process.env.PORT_VALIDAR_ENTIDAD}/ms/validar-cliente`, data);
             logger.debug(`Respuesta microservcio validar-cliente-ms ${JSON.stringify(resultadoConsulta.data)}`); 
 
             // recorremos las ordenes de servicio si el length es mayo a 0 es por que el clienteexiste en makita.
@@ -126,7 +127,7 @@ async function dataValidaCliente(osArray) {
         const data = newArray;
        //microservicio validar-orden-ms
        logger.info(`Ejecuta microservcio validar-orden-ms`); 
-       const resultadoValidarOrden = await axios.post('http://172.16.1.206:4007/ms/validar-orden', data);
+       const resultadoValidarOrden = await axios.post(`http://172.16.1.206:${process.env.PORT_VALIDAR_ORDEN}/ms/validar-orden`, data);
 
         logger.info(`Fin de la funcion dataValidaCliente`);
         return newArray;
