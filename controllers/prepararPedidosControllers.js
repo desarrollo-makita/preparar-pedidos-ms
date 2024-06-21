@@ -71,7 +71,7 @@ async function prepararDataPedidos(req, res) {
         logger.info(`Fin de la funcion prepararDataPedidos`);
         
 
-        res.status(200).json(arrayPedidosData);
+        res.status(200).json(arrayPedidosFormated);
         
     
 } catch (error) {
