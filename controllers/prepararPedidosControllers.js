@@ -30,6 +30,7 @@ async function prepararDataPedidos(req, res) {
                     
                     let objetoComparacion = { ...pedidosList[i] };
                     objetoComparacion.codigo_posto = dataOrdenServicio[j].codigo_posto;
+                    objetoComparacion.cnpj = dataOrdenServicio[j].cnpj;
                     objetoComparacion.informeTecnico = dataOrdenServicio[j].defeito_reclamado;
                     objetoComparacion.modelo = dataOrdenServicio[j].referencia;
                     objetoComparacion.serie = dataOrdenServicio[j].serie;
@@ -97,11 +98,11 @@ async function dataValidaCliente(osArray) {
     try {
 
         for (const os of osArray) {
-            const codigoPosto = os.codigo_posto.trim();
+            const cnpj = os.cnpj.trim();
             
             const data = {
                 tabla : process.env.ENTIDAD_TABLE,
-                entidad :  codigoPosto
+                entidad :  cnpj
             }
             
             //microservicio validar-cliente-ms
