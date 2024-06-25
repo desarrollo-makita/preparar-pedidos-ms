@@ -98,7 +98,7 @@ async function dataValidaCliente(osArray) {
     try {
 
         for (const os of osArray) {
-            const cnpj = os.cnpj.trim();
+            const cnpj = formatRut(os.cnpj.trim());
             
             const data = {
                 tabla : process.env.ENTIDAD_TABLE,
@@ -139,6 +139,22 @@ async function dataValidaCliente(osArray) {
     }
 
    
+}
+
+function formatRut(rut) {
+    // Convertir el RUT a string por si acaso viene como número
+    rut = rut.toString();
+
+    // Verificar si el RUT ya tiene el guion
+    if (rut.includes('-')) {
+        return rut;
+    }
+
+    // Si no tiene guion, agregarlo antes del último dígito
+    const rutBody = rut.slice(0, -1);
+    const rutCheckDigit = rut.slice(-1);
+
+    return `${rutBody}-${rutCheckDigit}`;
 }
 
 
